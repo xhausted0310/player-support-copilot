@@ -70,6 +70,31 @@ MediaWiki API ──list (revid)──► changed revision? ──no──► sk
   freshness filtering in RAG.
 
 <!-- EDA:START -->
+### Results ([notebooks/01_eda.ipynb](notebooks/01_eda.ipynb))
+
+| Category | Docs kept | Median chars | Median sections |
+| --- | ---: | ---: | ---: |
+| operator | 110 | 13,950 | 16 |
+| weapon | 115 | 3,944 | 14 |
+| patch notes | 108 | 4,964 | 12 |
+| map | 33 | 3,277 | 7 |
+| gadget | 27 | 3,992 | 5 |
+| playlist | 11 | 2,348 | 6 |
+| guide | 6 | 2,477 | 2 |
+| **total** | **410** | **4,825** | |
+
+- **410 documents, ~559k words (~0.73M tokens)** after cleaning; 6 stub pages dropped as too
+  short, 0 near-duplicates in the Siege subset.
+- **98%** of documents keep a heading structure → structural chunking is viable in stage 2.
+- Patch version recognised for **108/108** patch notes.
+- Full fetch ≈ 6 min (throttled to 2 req/s); an incremental re-run with no wiki changes
+  ≈ **5 s and zero page downloads**.
+- **Jigsaw Toxic Comment** (159,571 comments): 10.2% toxic, `threat` only 0.30% → ~9:1
+  imbalance; class weights and macro-F1 are required in stage 5, not accuracy.
+- **Gaming-slang risk:** in Jigsaw (Wikipedia talk pages) comments containing *kill* are toxic in
+  47% of cases, *noob* 42%, *trash* 40% vs a 10% base rate. A moderation model trained only on
+  Jigsaw will over-flag normal game chat ("kill the defuser", "gg") → slang-aware evaluation set
+  and a risk entry in RISKS.md.
 <!-- EDA:END -->
 
 ### API

@@ -37,7 +37,6 @@ eda = [
     "jupyter>=1.0",
     "pandas>=2.2",
     "matplotlib>=3.9",
-    "datasets>=3.0",
 ]
 
 [build-system]
